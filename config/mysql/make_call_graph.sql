@@ -7,8 +7,8 @@ CREATE PROCEDURE `make_call_graph`()
 	SQL SECURITY DEFINER
 	COMMENT ''
 BEGIN
-select target_symbol "Target", symbol "Source" from calls;
-select target_symbol "Id", name "Label" from calls inner join symbols on calls.target_symbol=symbols.symbol
+select target_symbol 'Target', symbol 'Source' from calls;
+select target_symbol 'Id', name 'Label' from calls inner join symbols on calls.target_symbol=symbols.symbol
 union all
-select calls.symbol "Id", name "Label" from calls inner join symbols on calls.symbol=symbols.symbol;
+select calls.symbol 'Id', name 'Label' from calls inner join symbols on calls.symbol=symbols.symbol;
 END
