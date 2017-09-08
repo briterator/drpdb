@@ -230,6 +230,19 @@ namespace
 #include "PDBReflection.inl"
 		}
 	};
+	bool VerifyMysqlAvailable()
+	{
+	#ifdef WIN32
+		static HANDLE library_handle = LoadLibrary( TEXT( "libmysql.dll" ) );
+		if(library_handle == nullptr)
+		{
+			std::cerr << "Error: Mysql output not available 'Failed to load libmysql.dll'" << std::endl;
+		}
+		return library_handle != nullptr;
+	#else
+		return true;
+	#endif
+	}
 }
 namespace MySQL
 {
@@ -259,10 +272,13 @@ namespace MySQL
 
 	OutputEngine CreateEngine()
 	{
+		static const bool MysqlAvailable = VerifyMysqlAvailable( );
 		OutputEngine res;
-		res.name = "mysql";
-		res.output = &output;
-		res.describe = &describe;
+		if (MysqlAvailable) {
+			res.name = "mysql";
+			res.output = &output;
+			res.describe = &describe;
+		}
 		return res;
 	}
 }

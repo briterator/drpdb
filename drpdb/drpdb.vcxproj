@@ -33,11 +33,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="drpdb.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -48,64 +46,28 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(VSInstallDir)DIA SDK\include;..\mysql-connector-c-6.1.6-winx64\include</AdditionalIncludeDirectories>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\mysql-connector-c-6.1.6-winx64\lib;$(VSInstallDir)DIA SDK\lib\amd64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>diaguids.lib;RpcRT4.lib;odbc32.lib;odbccp32.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>libmysql.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
-    </Link>
-    <PreBuildEvent>
-      <Command>midl /amd64  /I "$(VSInstallDir)DIA SDK\include" "$(VSInstallDir)DIA SDK\idl\dia2.idl" /tlb src\dia2.tlb</Command>
-    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <WarningLevel>Level4</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(VSInstallDir)DIA SDK\include;..\mysql-connector-c-6.1.6-winx64\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <FloatingPointModel>Fast</FloatingPointModel>
-      <FloatingPointExceptions>false</FloatingPointExceptions>
-      <CallingConvention>VectorCall</CallingConvention>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
-      <StringPooling>true</StringPooling>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <CreateHotpatchableImage>false</CreateHotpatchableImage>
-      <TreatWarningAsError>false</TreatWarningAsError>
-    </ClCompile>
+     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>diaguids.lib;RpcRT4.lib;odbc32.lib;odbccp32.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\mysql-connector-c-6.1.6-winx64\lib;$(VSInstallDir)DIA SDK\lib\amd64</AdditionalLibraryDirectories>
-      <DelayLoadDLLs>libmysql.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
     </Link>
-    <PreBuildEvent>
-      <Command>midl /amd64  /I "$(VSInstallDir)DIA SDK\include" "$(VSInstallDir)DIA SDK\idl\dia2.idl" /tlb src\dia2.tlb</Command>
-    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="dia2.h" />
     <ClInclude Include="src\CSVWriter.h" />
     <ClInclude Include="src\DIACommon.h" />
     <ClInclude Include="src\SQLSchemaWriter.h" />
@@ -113,9 +75,6 @@
     <ClInclude Include="src\drpdb.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dia2_i.c" />
-    <ClCompile Include="dia2_p.c" />
-    <ClCompile Include="dlldata.c" />
     <ClCompile Include="src\CSVOutput.cpp" />
     <ClCompile Include="src\DIA2Common.cpp" />
     <ClCompile Include="src\DIA2Doc.cpp" />
@@ -127,7 +86,6 @@
     <ClCompile Include="src\WikiDoc.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\dia2.tlb" />
     <None Include="src\PDBReflection.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

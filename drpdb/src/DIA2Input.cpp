@@ -936,11 +936,11 @@ Sym::Data::Data(IDiaSymbol* diaSymbol, uint32_t symIndexId_)  noexcept
 	}
 	else if (Val.vt == VT_R4)
 	{
-		value = Val.fltVal;
+		value = static_cast<int64_t>(Val.fltVal);
 	}
 	else if (Val.vt == VT_R8)
 	{
-		value = Val.dblVal;
+		value = static_cast<int64_t>(Val.dblVal);
 	}
 	symbol = symIndexId_;
 

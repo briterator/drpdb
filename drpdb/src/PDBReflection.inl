@@ -142,7 +142,7 @@ BEGIN_STRUCT(Friend, friends, "Describes `friend` relationships among data types
 END_STRUCT()
 
 BEGIN_STRUCT(PublicSymbol, public_symbols, "Describes symbols which are visible to multiple translation units. These symbols force additional work onto the linker", Sym::TableType::Master)
-	UNIQUE_MEMBER(symbol, "Corresponding *symbols* table entry");
+	UNIQUE_MEMBER(symbol, "Corresponding *symbols* table entry")
 	MEMBER(type, "DATA or FUNCTION")
 	MEMBER(address, "Relative virtual address of the symbol")
 	MEMBER(managed, "Is a managed symbol")

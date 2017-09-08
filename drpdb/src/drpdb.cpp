@@ -69,6 +69,9 @@ void init_engines()
 	gEngines.push_back(MySQL::CreateEngine());
 	gEngines.push_back(CSV::CreateEngine());
 	gEngines.push_back(ODBC::CreateEngine());
+	// Remove null engines
+	gEngines.erase( std::remove_if( begin( gEngines ), end( gEngines ), []( auto& e ) { return e.output == nullptr; } ), end( gEngines ) );
+
 }
 
 OutputEngine* get_output_engine()

@@ -934,9 +934,12 @@ struct SymbolData
 
 struct OutputEngine
 {
+	using OutputFn = void( SymbolData& );
+	using DescribeFn = std::string();
+
 	std::string name;
-	void(*output)(SymbolData&);
-	std::string(*describe)();
+	OutputFn* output{ nullptr };
+	DescribeFn* describe{ nullptr };
 };
 
 std::string getOption(const char* name);
