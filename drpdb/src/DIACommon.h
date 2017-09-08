@@ -6,6 +6,8 @@
 #include <comdef.h>
 #include <atlcomcli.h>
 #include <string>
+#include <algorithm>
+
 std::string getOption(const char* name);
 
 namespace DIA2
@@ -24,21 +26,28 @@ namespace DIA2
 	{
 		LONG num = 0;
 		enumerator->get_Count(&num);
+		if (num < 0) {
+			return;
+		}
+
 		p.init(num);
 		std::cout << "Reading " << num << " " << name << std::endl;
-		while(true)
+
+		const ULONG ChunkSize = 4096;
+		ULONG totalNumFetched{ 0 };
+		while(totalNumFetched < (ULONG)num)
 		{
-			CComPtr<T> Fetched[65536] = { nullptr };
+			const ULONG numToFetch = std::min( num - totalNumFetched, ChunkSize );
+			auto fetched = std::make_unique<CComPtr<T>[]>( numToFetch );
 			ULONG numFetched = 0;
-			auto HR = enumerator->Next(65536, (T**)Fetched, &numFetched);
-
-			if (FAILED(HR) || numFetched == 0)
+			const auto HR = enumerator->Next( numToFetch, (T**)fetched.get(), &numFetched );
+			if (FAILED( HR ) || numFetched == 0)
 				break;
-
 			for (ULONG f = 0; f < numFetched; ++f)
 			{
-				p.element(Fetched[f]);
+				p.element( fetched[f] );
 			}
+			totalNumFetched += numFetched;
 		}
 	}
 	template<class PSectionContrib, class PInjSrc, class PSrcFiles, class PSymbols, class PSegMap, class PInputAsms, class P_Frame, class P_Lines>

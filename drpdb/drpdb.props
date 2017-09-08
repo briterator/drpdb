@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <DiaSDKDir>$(VSINSTALLDIR)DIA SDK\</DiaSDKDir>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\mysql-connector-c-6.1.6-winx64\include;..\sqlite\include;$(DiaSDKDir)include</AdditionalIncludeDirectories>
+      <WarningLevel>Level4</WarningLevel>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <StringPooling>true</StringPooling>
+      <DisableSpecificWarnings>4189;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>diaguids.lib;RpcRT4.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>libmysql.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <AdditionalLibraryDirectories>..\mysql-connector-c-6.1.6-winx64\lib;$(DiaSDKDir)lib\amd64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Midl />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="DiaSDKDir">
+      <Value>$(DiaSDKDir)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
